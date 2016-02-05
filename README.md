@@ -1,8 +1,8 @@
 # Horizontal-Funnel-Chart
 
-##Horizontal Funnel Chart generation library using the D3.js framework
+Horizontal Funnel Chart generation library using the D3.js framework
 
-##Modify Vertical Horizontal Funnel chart library from http://jakezatecky.github.io/d3-funnel/
+Modify Vertical Horizontal Funnel chart library from http://jakezatecky.github.io/d3-funnel/
 
 ##Play with this chart using customized properties.
 ![alt text](https://github.com/inlove13/Horizontal-Funnel-Chart/blob/master/screenshot/horizontal_default.png "Horizontal Funnel Chart example")
