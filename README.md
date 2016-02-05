@@ -32,8 +32,8 @@ This will support
 7. Tooltip Settings
   ![alt text](https://github.com/inlove13/Horizontal-Funnel-Chart/blob/master/screenshot/horizontal_tooltip.png "Tooltip")
 
-8. Window size response behavior
-  Will redraw Char when chaning browser window size.
+8. Window size response behavior:
+  will redraw Chart when chaning browser window size.
 
 ###How to use
 ###Define actual data for funnel chart.
