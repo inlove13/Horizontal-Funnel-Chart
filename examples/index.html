@@ -1,0 +1,186 @@
+<html>
+<head>
+  <title>Horizontal FunnelChart</title>
+  <link rel="shortcut icon" href="../src/img/minion.jpg" type="image/jpeg" />
+</head>
+<body>
+<link rel="stylesheet" href="../src/css/funnelchart.css" type="text/css">
+  <div class="ai-title">
+    <div id="title">
+      <div>Horizontal Funnel Chart</div>
+      <button id="create" class="btn">Create</button>
+      <button id="refresh" class="btn">Refresh</button>
+    </div>
+  </div>
+  <div class="options">
+    <div class="option">
+      <p>Color Settings</p>
+      <label for="color-fill">Fill</label>
+      <input type="radio" name="color" id="color-fill" value=true>
+      <label for="color-border">Border only</label>
+      <input type="radio" name="color" id="color-border" value=false>
+    </div>
+    <div class="option">
+      <p>Animation Settings</p>
+      <label for="ani-on">On</label>
+      <input type="radio" name="ani" id="ani-on" value=2>
+      <label for="ani-off">Off</label>
+      <input type="radio" name="ani" id="ani-off" value=0>
+    </div>
+    <div class="option">
+      <p>Image Settings</p>
+      <label for="img-on">On</label>
+      <input type="radio" name="img" id="img-on" value=true>
+      <label for="img-off">Off</label>
+      <input type="radio" name="img" id="img-off" value=false>
+    </div>
+    <div class="option">
+      <p>Label position Settings</p>
+      <label for="label-bottom">Bottom</label>
+      <input type="radio" name="label" id="label-bottom" value="bottom">
+      <label for="label-middle">Middle</label>
+      <input type="radio" name="label" id="label-middle" value="middle">
+    </div>
+    <div class="option">
+      <p>Section Hide/Show Settings</p>
+      <label for="hide-show-on">On</label>
+      <input type="radio" name="section" id="hide-show-on" value=true>
+      <label for="hide-show-off">Off</label>
+      <input type="radio" name="section" id="hide-show-off" value=false>
+    </div>
+    <div class="option">
+      <p>Link Settings</p>
+      <label for="link-on">On</label>
+      <input type="radio" name="link" id="link-on" value=true>
+      <label for="link-off">Off</label>
+      <input type="radio" name="link" id="link-off" value=false>
+    </div>
+    <div class="option">
+      <p>Tooltip Settings</p>
+      <label for="tooltip-on">On</label>
+      <input type="radio" name="tooltip" id="tooltip-on" value=true>
+      <label for="tooltip-off">Off</label>
+      <input type="radio" name="tooltip" id="tooltip-off" value=false>
+    </div>
+
+  </div>
+  <div class="ai-graph">
+	  <div id="funnelContainer" class="hide"></div>
+  </div>
+  <div class="tooltip-area"></div>
+</body>
+<script src="../src/js/d3.v2.min.js"></script>
+<script src="../src/js/d3-funnel-charts.js"></script>
+<script src="../src/js/jquery.min.js"></script>
+<script>
+	var funnel_data = [
+      ['Website visits', 800, 'http://i.imgur.com/Ej8Oyf8.gif', 'http://i.imgur.com/Ej8Oyf8.gif', '10 per day'],
+      ['Downloads', 700, 'http://38.media.tumblr.com/68a980299b26202540db083a6b69077b/tumblr_nxcbqqYXs61tfb9v2o1_500.gif', 'http://38.media.tumblr.com/68a980299b26202540db083a6b69077b/tumblr_nxcbqqYXs61tfb9v2o1_500.gif', '4 per day'],
+      ['Request demo', 300, 'http://24.media.tumblr.com/130f821e0c1c0ba7490622aa870ffe96/tumblr_n4iuliOlHb1tziei6o1_500.gif', 'http://24.media.tumblr.com/130f821e0c1c0ba7490622aa870ffe96/tumblr_n4iuliOlHb1tziei6o1_500.gif', '2 per day'],
+      ['Purchased', 150, 'http://25.media.tumblr.com/d4dd104b64e7b9f3b34abc5428d63bac/tumblr_mpn7u7ek351rmw6moo1_500.gif', 'http://25.media.tumblr.com/d4dd104b64e7b9f3b34abc5428d63bac/tumblr_mpn7u7ek351rmw6moo1_500.gif', '.5 per day']];
+    var chartheight = 490;
+</script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('div.tooltip-area').empty();
+  });
+  $('#create').click(function(){
+    $('#funnelContainer').removeClass('hide');
+    $('div.tooltip-area').empty();
+    // Set Configuration and Draw
+    SetConfiguration();
+  });
+  $('#refresh').click(function(){
+    $('div.tooltip-area').empty();
+    $("input").each(function(){
+      $(this).prop("checked", false);
+    });
+    $('#funnelContainer').addClass('hide');
+  });
+  $( window ).resize(function() {
+    $('div.tooltip-area').empty();
+    // Set Configuration and Draw
+    SetConfiguration();
+  });
+  function SetConfiguration(){
+    // checkbox
+    // Color
+    var color = true;
+    var ani = 0;
+    var icon = false;
+    var selected = $("input[name='color']:checked");
+    if (selected.length > 0){
+      color = selected.val() === 'true';
+    }
+    // Animation
+    selected = $("input[name='ani']:checked");
+    if (selected.length > 0){
+      ani = selected.val();
+    }
+    // Image
+    selected = $("input[name='img']:checked");
+    if (selected.length > 0){
+      icon = selected.val()=== 'true';
+    }
+    // Label
+    var label='middle';
+    selected = $("input[name='label']:checked");
+    if (selected.length > 0){
+      label = selected.val();
+    }
+    // Section
+    var section=false;
+    selected = $("input[name='section']:checked");
+    if (selected.length > 0){
+      section = selected.val()=== 'true';
+    }
+    // link
+    var link=false;
+    selected = $("input[name='link']:checked");
+    if (selected.length > 0){
+      link = selected.val()=== 'true';
+    }
+    // tooltip
+    var tooltip=false;
+    selected = $("input[name='tooltip']:checked");
+    if (selected.length > 0){
+      tooltip = selected.val()=== 'true';
+    }
+    DrawFunnelChart(chartheight, ani, label, icon, tooltip, section, color, link);
+  };
+  function DrawFunnelChart(height, animation, label, icon, tooltip, click, fill, redirect){
+    var width = $('#funnelContainer').width();
+    var DEFAULT_HEIGHT = 490;
+    var DEFAULT_LABEL = 'middle';
+    var DEFAULT_TRUE = true;
+    var DEFAULT_FASLE = false;
+    var DEFAULT_COLORS = ['#00BCD4', '#2196F3', '#3F51B5', '#673AB7', '#9C27B0', '#E91E63', '#FF5722', '#FF9800', '#FFC107', '#CDDC39',
+            '#607D8B', '#4CAF50', '#AD1457', '#D500F9', '#7C4DFF', '#4FC3F7', '#69F0AE', '#1A237E', '#DD2C00', '#FFEB38'];
+    height = typeof height !== 'undefined' ? height : DEFAULT_HEIGHT;
+    label = typeof label !== 'undefined' ? label : DEFAULT_LABEL;
+    icon = typeof icon !== 'undefined' ? icon : DEFAULT_FASLE;
+    fill = typeof fill !== 'undefined' ? fill : DEFAULT_FASLE;
+    tooltip = typeof tooltip !== 'undefined' ? tooltip : DEFAULT_TRUE;
+    redirect = typeof redirect !== 'undefined' ? redirect : DEFAULT_FASLE;
+    click = typeof click != 'undefined' ? click : DEFAULT_FASLE;
+    var chart = new FunnelChart({
+      data: funnel_data,
+      width: width,
+      height: height,
+      bottomPct: 1/4,
+      fill: fill,
+      hoverEffects: DEFAULT_TRUE,
+      colors: DEFAULT_COLORS,
+      label: label,
+      icon: icon,
+      tooltip: tooltip,
+      click: click,
+      redirect: redirect
+    });
+    $('#funnelContainer').empty();
+    chart.draw('#funnelContainer', animation);
+    var increse_height = height + 200;
+    $('svg').css('height', increse_height + 'px');
+  }
+</script>
+</html>
