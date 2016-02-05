@@ -5,22 +5,33 @@ Horizontal Funnel Chart generation library using the D3.js framework
 Modify Vertical Horizontal Funnel chart library from http://jakezatecky.github.io/d3-funnel/
 
 ##Play with this chart using customized properties.
+
 ![alt text](https://github.com/inlove13/Horizontal-Funnel-Chart/blob/master/screenshot/horizontal_default.png "Horizontal Funnel Chart example")
+
 This will support 
+
 ![alt text](https://github.com/inlove13/Horizontal-Funnel-Chart/blob/master/screenshot/horizontal_option.png "Customization Properties ")
+
 1. Color Settings
   ![alt text](https://github.com/inlove13/Horizontal-Funnel-Chart/blob/master/screenshot/horizontal_borderonly.png "Border only")
+
 2. Animation Settings
+
 3. Images Settings
   ![alt text](https://github.com/inlove13/Horizontal-Funnel-Chart/blob/master/screenshot/horizontal_image.png "Insert Images(even gif)")
+
 4. Label positioin Settings
   ![alt text](https://github.com/inlove13/Horizontal-Funnel-Chart/blob/master/screenshot/horizontal_label_bottom.png "Label bottom")
+
 5. Section hide/show Settings
    Hide/Show Step area by clicking a label.
+
 6. Link Settings:
    Click label will redirect certain place.
+
 7. Tooltip Settings
   ![alt text](https://github.com/inlove13/Horizontal-Funnel-Chart/blob/master/screenshot/horizontal_tooltip.png "Tooltip")
+
 8. Window size response behavior
   Will redraw Char when chaning browser window size.
 
